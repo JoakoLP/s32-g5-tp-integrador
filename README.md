@@ -2,6 +2,12 @@
 **Proyecto Grupo 5 (S32)**  
 *Cátedra de Comunicación de Datos - UTN FRLP*
 
+## 👥 Integrantes del Grupo
+- **Esperanza Franco**
+- **Tachi Joaquin**
+- **Takara Joaquin**
+- **Veliz Condori Ruben**
+
 Este repositorio contiene los simuladores desarrollados para el Trabajo Práctico Integrador de la materia Comunicación de Datos. El objetivo de este proyecto es visualizar, experimentar y aplicar los conceptos teóricos de conversión analógico-digital y modulación de manera práctica mediante herramientas interactivas.
 
 ## 📂 Estructura del Proyecto
