@@ -358,7 +358,7 @@ export function useADCSystem() {
    - Presencia de Aliasing: ${aliasingDetected ? "SÍ (Frecuencia de Nyquist superada)" : "NO (Muestreo seguro)"}
 
 ===========================================================
-PROYECTO INTEGRADO - GRUPO 5 - S32
+PROYECTO INTEGRADOR - GRUPO 5 - S32 UTN FRLP
 ===========================================================`;
 
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });

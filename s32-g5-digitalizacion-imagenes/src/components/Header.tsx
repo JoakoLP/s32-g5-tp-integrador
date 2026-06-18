@@ -12,7 +12,7 @@ export function Header({ currentView, onToggleView }: HeaderProps) {
         <div className="flex items-center gap-3">
           <span className="w-2 h-2 rounded-full bg-[#ffaa00] shadow-[0_0_8px_#ffaa00]"></span>
           <h1 className="font-mono text-[13px] uppercase tracking-[0.15em] font-bold text-[#e3e6eb]">
-            Módulo de Análisis y Digitalización Óptica // VDC-400
+            Módulo de Análisis y Digitalización Óptica
           </h1>
         </div>
         <button
