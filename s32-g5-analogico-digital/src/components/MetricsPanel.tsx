@@ -1,4 +1,4 @@
-import { Volume2, VolumeX, FileText } from 'lucide-react';
+import { Volume2, VolumeX, FileText, Circle, Square } from 'lucide-react';
 
 interface MetricsPanelProps {
   bitrate: number;
@@ -6,9 +6,12 @@ interface MetricsPanelProps {
   sqnrTheoretical: number;
   sqnrReal: number;
   playingAudio: boolean;
+  isRecording: boolean;
   startDegradationAudio: () => void;
   stopDegradationAudio: () => void;
   handleExportReport: () => void;
+  startRecording: () => void;
+  stopRecording: () => void;
 }
 
 export function MetricsPanel({
@@ -17,9 +20,12 @@ export function MetricsPanel({
   sqnrTheoretical,
   sqnrReal,
   playingAudio,
+  isRecording,
   startDegradationAudio,
   stopDegradationAudio,
-  handleExportReport
+  handleExportReport,
+  startRecording,
+  stopRecording
 }: MetricsPanelProps) {
   return (
     <>
@@ -61,6 +67,21 @@ export function MetricsPanel({
           {playingAudio ? <VolumeX size={14} /> : <Volume2 size={14} />}
           {playingAudio ? "Muestrear Silencio" : "Escuchar Salida (Bitcrusher)"}
         </button>
+
+        {/* Grabar Audio */}
+        {playingAudio && (
+          <button
+            onClick={isRecording ? stopRecording : startRecording}
+            className={`w-full font-semibold text-xs py-2.5 px-4 rounded border flex items-center justify-center gap-2 transition-all ${
+              isRecording
+                ? 'bg-red-950 text-red-400 border-red-500 animate-pulse'
+                : 'bg-[#1b1c1e] border-[#25272a] text-slate-300 hover:border-red-900 hover:text-red-400'
+            }`}
+          >
+            {isRecording ? <Square size={14} fill="currentColor" /> : <Circle size={14} fill="currentColor" />}
+            {isRecording ? "Detener Grabación y Descargar WAV" : "Grabar Audio Cuantizado (WAV)"}
+          </button>
+        )}
       </div>
 
       {/* Exportar Reporte */}

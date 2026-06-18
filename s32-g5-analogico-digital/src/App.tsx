@@ -52,9 +52,12 @@ export default function App() {
               sqnrTheoretical={state.sqnrTheoretical}
               sqnrReal={state.sqnrReal}
               playingAudio={state.playingAudio}
+              isRecording={state.isRecording}
               startDegradationAudio={actions.startDegradationAudio}
               stopDegradationAudio={actions.stopDegradationAudio}
               handleExportReport={actions.handleExportReport}
+              startRecording={actions.startRecording}
+              stopRecording={actions.stopRecording}
             />
           </aside>
 

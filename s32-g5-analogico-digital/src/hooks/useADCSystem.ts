@@ -10,6 +10,39 @@ export interface ProcessResult {
 
 export type InputType = 'synth' | 'mic' | 'file';
 
+function encodeWAV(samples: Float32Array, sampleRate: number): Blob {
+  const buffer = new ArrayBuffer(44 + samples.length * 2);
+  const view = new DataView(buffer);
+
+  const writeString = (view: DataView, offset: number, string: string) => {
+    for (let i = 0; i < string.length; i++) {
+      view.setUint8(offset + i, string.charCodeAt(i));
+    }
+  };
+
+  writeString(view, 0, 'RIFF');
+  view.setUint32(4, 36 + samples.length * 2, true);
+  writeString(view, 8, 'WAVE');
+  writeString(view, 12, 'fmt ');
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true); // PCM
+  view.setUint16(22, 1, true); // Mono
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * 2, true); // Byte rate
+  view.setUint16(32, 2, true); // Block align
+  view.setUint16(34, 16, true); // 16-bit
+  writeString(view, 36, 'data');
+  view.setUint32(40, samples.length * 2, true);
+
+  let offset = 44;
+  for (let i = 0; i < samples.length; i++, offset += 2) {
+    let s = Math.max(-1, Math.min(1, samples[i]));
+    view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+  }
+
+  return new Blob([view], { type: 'audio/wav' });
+}
+
 export function useADCSystem() {
   // --- ESTADO DE PARÁMETROS DEL ADC ---
   const [activeInput, setActiveInput] = useState<InputType>('synth');
@@ -17,6 +50,7 @@ export function useADCSystem() {
   const [samplingRate, setSamplingRate] = useState<number>(8.0);
   const [bitDepth, setBitDepth] = useState<number>(8);
   const [playingAudio, setPlayingAudio] = useState<boolean>(false);
+  const [isRecording, setIsRecording] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -45,6 +79,8 @@ export function useADCSystem() {
   const animationRef = useRef<number>(0);
   const samplingRateRef = useRef<number>(samplingRate);
   const bitDepthRef = useRef<number>(bitDepth);
+  const isRecordingRef = useRef<boolean>(false);
+  const recordingBufferRef = useRef<Float32Array[]>([]);
 
   useEffect(() => {
     samplingRateRef.current = samplingRate;
@@ -318,6 +354,10 @@ export function useADCSystem() {
         const quantizedVal = Math.round(rawVal / stepSize) * stepSize;
         output[i] = quantizedVal * 0.35;
       }
+
+      if (isRecordingRef.current) {
+        recordingBufferRef.current.push(new Float32Array(output));
+      }
     };
 
     synthCrusherRef.current.connect(ctx.destination);
@@ -368,6 +408,39 @@ PROYECTO INTEGRADOR - GRUPO 5 - S32 UTN FRLP
     link.click();
   }, [activeInput, aliasingDetected, bitDepth, bitrate, levels, samplingRate, sqnrReal, sqnrTheoretical, waveFreq]);
 
+  const startRecording = useCallback(() => {
+    if (!playingAudio) return;
+    recordingBufferRef.current = [];
+    setIsRecording(true);
+    isRecordingRef.current = true;
+  }, [playingAudio]);
+
+  const stopRecording = useCallback(() => {
+    setIsRecording(false);
+    isRecordingRef.current = false;
+    
+    if (recordingBufferRef.current.length === 0) return;
+
+    const ctx = getAudioContext();
+    const totalLength = recordingBufferRef.current.reduce((acc, val) => acc + val.length, 0);
+    const combined = new Float32Array(totalLength);
+    let offset = 0;
+    for (const chunk of recordingBufferRef.current) {
+      combined.set(chunk, offset);
+      offset += chunk.length;
+    }
+
+    const wavBlob = encodeWAV(combined, ctx.sampleRate);
+    const url = URL.createObjectURL(wavBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `audio_cuantizado_${bitDepth}bits_${samplingRate}kHz.wav`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+    
+    recordingBufferRef.current = [];
+  }, [bitDepth, samplingRate, getAudioContext]);
+
   return {
     state: {
       activeInput,
@@ -375,6 +448,7 @@ PROYECTO INTEGRADOR - GRUPO 5 - S32 UTN FRLP
       samplingRate,
       bitDepth,
       playingAudio,
+      isRecording,
       loading,
       error,
       bitrate,
@@ -394,6 +468,8 @@ PROYECTO INTEGRADOR - GRUPO 5 - S32 UTN FRLP
       startDegradationAudio,
       stopDegradationAudio,
       handleExportReport,
+      startRecording,
+      stopRecording,
     },
     refs: {
       originalSignal,
