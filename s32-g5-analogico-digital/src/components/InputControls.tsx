@@ -25,6 +25,7 @@ export function InputControls({
 }: InputControlsProps) {
   return (
     <>
+      {/* Selector de fuente de entrada de audio para procesar en tiempo real */}
       <div className="flex flex-col gap-3">
         <h2 className="font-mono text-[11px] text-slate-500 uppercase tracking-wider border-b border-[#25272a] pb-2">
           1. Entrada de Señal
@@ -68,6 +69,7 @@ export function InputControls({
         </label>
       </div>
 
+      {/* Control especifico de la frecuencia del oscilador para la señal de prueba continua */}
       {activeInput === 'synth' && (
         <div className="flex flex-col gap-3">
           <h2 className="font-mono text-[11px] text-slate-500 uppercase tracking-wider border-b border-[#25272a] pb-2">

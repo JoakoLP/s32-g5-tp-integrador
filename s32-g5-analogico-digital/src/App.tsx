@@ -24,9 +24,10 @@ export default function App() {
         onToggleView={() => setCurrentView(currentView === 'simulator' ? 'theory' : 'simulator')}
       />
 
+      {/* Renderizado condicional del simulador interactivo o la seccion de apunte teorico */}
       {currentView === 'simulator' ? (
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-[340px_1fr] overflow-hidden">
-          {/* Panel Lateral de Controles */}
+          {/* Panel Lateral con los controles de parametros para el experimento ADC */}
           <aside className="p-6 bg-[#131416] border-r-0 lg:border-r-2 border-[#25272a] flex flex-col gap-6 overflow-y-auto">
             <InputControls
               activeInput={state.activeInput}
@@ -61,7 +62,7 @@ export default function App() {
             />
           </aside>
 
-          {/* Panel Derecho: Osciloscopios */}
+          {/* Area Principal: Osciloscopios para visualizacion de señales */}
           <main className="p-6 flex flex-col gap-6 bg-[#0a0b0d] overflow-y-auto">
             <Oscilloscope
               title="Señal Analógica Original (Continua)"
@@ -83,7 +84,7 @@ export default function App() {
               aliasingDetected={state.aliasingDetected}
             />
 
-            {/* Panel Teórico de la Cátedra */}
+            {/* Seccion de soporte teorico con las formulas aplicadas en la simulacion */}
             <div className="mt-auto bg-[#131416] border border-[#25272a] rounded p-5 flex flex-col gap-4">
               <h3 className="font-mono text-[11px] text-slate-400 uppercase tracking-widest border-b border-[#25272a] pb-2">
                 Soporte Teórico y Fórmulas del Sistema

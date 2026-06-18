@@ -55,7 +55,7 @@ export function MetricsPanel({
           </div>
         </div>
 
-        {/* Escuchar Audio */}
+        {/* Boton para habilitar la preescucha interactiva con el filtro de cuantizacion (Bitcrusher) */}
         <button
           onClick={playingAudio ? stopDegradationAudio : startDegradationAudio}
           className={`w-full font-semibold text-xs py-2.5 px-4 rounded border flex items-center justify-center gap-2 transition-all ${
@@ -68,7 +68,7 @@ export function MetricsPanel({
           {playingAudio ? "Muestrear Silencio" : "Escuchar Salida (Bitcrusher)"}
         </button>
 
-        {/* Grabar Audio */}
+        {/* Controles para capturar la salida discreta en formato WAV sin compresion */}
         {playingAudio && (
           <button
             onClick={isRecording ? stopRecording : startRecording}
@@ -84,7 +84,7 @@ export function MetricsPanel({
         )}
       </div>
 
-      {/* Exportar Reporte */}
+      {/* Accion para generar el archivo de reporte academico en texto plano */}
       <div className="mt-auto pt-4 border-t border-[#25272a]">
         <button
           onClick={handleExportReport}

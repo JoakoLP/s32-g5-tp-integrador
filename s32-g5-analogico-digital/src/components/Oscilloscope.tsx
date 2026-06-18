@@ -21,9 +21,8 @@ export function Oscilloscope({
   samplingRate = 8.0,
   aliasingDetected = false
 }: OscilloscopeProps) {
-  
-  // Custom drawing loop logic is maintained here or passed from parent,
-  // but to keep App.tsx clean, the drawing logic itself is here.
+  // La logica de dibujado se mantiene contenida en este componente para 
+  // no sobrecargar el renderizado de la aplicacion principal.
   useEffect(() => {
     let animationId: number;
 
@@ -52,6 +51,7 @@ export function Oscilloscope({
       ctx.stroke();
     };
 
+    // Funcion de renderizado para señales analogicas (trazo continuo interpolado)
     const drawAnalog = (ctx: CanvasRenderingContext2D, w: number, h: number) => {
       ctx.strokeStyle = color;
       ctx.lineWidth = 2.5;
@@ -76,6 +76,7 @@ export function Oscilloscope({
       ctx.shadowBlur = 0;
     };
 
+    // Funcion de renderizado para señales digitales (trazo escalonado con retencion de orden cero - ZOH)
     const drawDigital = (ctx: CanvasRenderingContext2D, w: number, h: number) => {
       ctx.strokeStyle = color;
       ctx.lineWidth = 2.2;
@@ -107,6 +108,7 @@ export function Oscilloscope({
       const pcmPeriod = 44100 / rateHz;
       const pixelPeriod = (w / length) * pcmPeriod;
 
+      // Dibujamos los puntos discretos capturados segun la frecuencia de muestreo configurada
       if (pixelPeriod >= 4) {
         ctx.fillStyle = '#00e676';
         for (let x = 0; x < w; x += pixelPeriod) {
@@ -122,6 +124,7 @@ export function Oscilloscope({
       }
     };
 
+    // Bucle principal de renderizado ejecutado por el navegador a la maxima frecuencia posible
     const render = () => {
       const canvas = canvasRef.current;
       if (!canvas) {

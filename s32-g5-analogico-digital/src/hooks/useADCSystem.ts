@@ -102,7 +102,7 @@ export function useADCSystem() {
       if (sourceNodeRef.current && activeInput !== 'synth') {
         try {
           sourceNodeRef.current.disconnect(synthCrusherRef.current);
-        } catch(e) {}
+        } catch (e) { }
       }
       synthCrusherRef.current.disconnect();
       synthCrusherRef.current = null;
@@ -244,7 +244,7 @@ export function useADCSystem() {
       if (activeInput === 'synth') {
         generateSynthSamples();
       }
-      
+
       // OPTIMIZACIÓN: Calculamos la señal digital localmente a 60 FPS para que el Osciloscopio 
       // se vea ultra fluido. La API en Python se sigue consultando cada 150ms pero solo
       // para actualizar las métricas matemáticas (SQNR, Bitrate) sin causar lag visual.
@@ -253,13 +253,13 @@ export function useADCSystem() {
       const stepLevels = Math.pow(2, bitDepthRef.current);
       const stepSize = 2.0 / stepLevels;
       const ratio = Math.max(1, Math.floor(44100 / (samplingRateRef.current * 1000)));
-      
+
       for (let i = 0; i < length; i++) {
         const sampledIdx = Math.floor(i / ratio) * ratio;
         const rawVal = raw[sampledIdx] || 0;
         digitalSignal.current[i] = Math.round(rawVal / stepSize) * stepSize;
       }
-      
+
       const now = Date.now();
       if (now - lastApiCallRef.current > 150 && !apiCallPendingRef.current) {
         syncWithBackend();
@@ -432,7 +432,7 @@ PROYECTO INTEGRADOR - GRUPO 5 - S32 UTN FRLP
   const stopRecording = useCallback(() => {
     setIsRecording(false);
     isRecordingRef.current = false;
-    
+
     if (recordingBufferRef.current.length === 0) return;
 
     const ctx = getAudioContext();
@@ -451,7 +451,7 @@ PROYECTO INTEGRADOR - GRUPO 5 - S32 UTN FRLP
     a.download = `audio_cuantizado_${bitDepth}bits_${samplingRate}kHz.wav`;
     a.click();
     window.URL.revokeObjectURL(url);
-    
+
     recordingBufferRef.current = [];
   }, [bitDepth, samplingRate, getAudioContext]);
 

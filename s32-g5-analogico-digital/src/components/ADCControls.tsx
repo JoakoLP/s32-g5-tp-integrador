@@ -19,7 +19,7 @@ export function ADCControls({
         2. Digitalización (ADC)
       </h2>
 
-      {/* Tasa de Muestreo */}
+      {/* Control de la frecuencia de muestreo (Fs) segun el teorema de Nyquist */}
       <div className="flex flex-col gap-2">
         <div className="flex justify-between text-xs font-mono">
           <span className="text-slate-300">Tasa de Muestreo (Fs):</span>
@@ -35,7 +35,7 @@ export function ADCControls({
         />
       </div>
 
-      {/* Profundidad de Bits */}
+      {/* Control de la profundidad de bits para establecer los escalones de cuantizacion */}
       <div className="flex flex-col gap-2">
         <div className="flex justify-between text-xs font-mono">
           <span className="text-slate-300">Resolución (Bits):</span>

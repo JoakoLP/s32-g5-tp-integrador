@@ -6,14 +6,14 @@ export interface ImageState {
   samplingFactor: number; // 1.0 to 0.03125
   bitDepth: number; // 24 to 1
   fps: number; // 1 to 60
-  
+
   pixelResolution: { w: number, h: number };
   totalPixels: number;
   rawBytes: number;
   transmissionMbps: number;
   isAliasing: boolean;
 }
-
+// Hook principal que maneja el estado global del simulador de imagenes
 export function useImageSystem() {
   const analogCanvasRef = useRef<HTMLCanvasElement>(null);
   const digitalCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -32,7 +32,7 @@ export function useImageSystem() {
     isAliasing: false,
   });
 
-  // Generar Patrón UTN
+  // Dibuja la carta de ajuste (patron de barras) por defecto
   const loadUTNPattern = useCallback(() => {
     const testCanvas = document.createElement('canvas');
     testCanvas.width = 800;
@@ -87,17 +87,18 @@ export function useImageSystem() {
     const reader = new FileReader();
     reader.onload = (e) => {
       if (e.target?.result) {
-        setState(s => ({ 
-          ...s, 
-          imageSrc: e.target!.result as string, 
-          loadedFileSize: file.size 
+        setState(s => ({
+          ...s,
+          imageSrc: e.target!.result as string,
+          loadedFileSize: file.size
         }));
       }
     };
     reader.readAsDataURL(file);
   }, []);
 
-  // Motor de Digitalización
+  // Proceso central de cuantizacion y muestreo. 
+  // Se ejecuta cada vez que cambia algun parametro del estado.
   useEffect(() => {
     const processImage = () => {
       const img = imageObjRef.current;
@@ -109,6 +110,7 @@ export function useImageSystem() {
       const ctxDigital = digitalCanvas.getContext('2d', { willReadFrequently: true });
       if (!ctxAnalog || !ctxDigital) return;
 
+      // Se calcula el aspect ratio para evitar que la imagen se deforme en el canvas
       const aspectRatio = img.width / img.height;
       const viewWidth = 800;
       const viewHeight = Math.round(viewWidth / aspectRatio);
@@ -123,6 +125,7 @@ export function useImageSystem() {
       const sampleW = Math.max(1, Math.round(viewWidth * factorMuestreo));
       const sampleH = Math.max(1, Math.round(viewHeight * factorMuestreo));
 
+      // Usamos un canvas oculto temporal para extraer la data de los pixeles redimensionados
       const auxCanvas = document.createElement('canvas');
       auxCanvas.width = sampleW;
       auxCanvas.height = sampleH;
@@ -135,9 +138,10 @@ export function useImageSystem() {
 
       for (let i = 0; i < pixels.length; i += 4) {
         let r = pixels[i];
-        let g = pixels[i+1];
-        let b = pixels[i+2];
+        let g = pixels[i + 1];
+        let b = pixels[i + 2];
 
+        // Reduccion de paleta de colores segun la profundidad de bits configurada
         if (bitsAmplitud === 12) {
           r = Math.round(r / 17) * 17;
           g = Math.round(g / 17) * 17;
@@ -151,14 +155,14 @@ export function useImageSystem() {
           g = g > 127 ? 255 : 0;
           b = b > 127 ? 255 : 0;
         } else if (bitsAmplitud === 1) {
-          const gray = 0.299*r + 0.587*g + 0.114*b;
+          const gray = 0.299 * r + 0.587 * g + 0.114 * b;
           const val = gray > 127 ? 255 : 0;
           r = val; g = val; b = val;
         }
 
         pixels[i] = r;
-        pixels[i+1] = g;
-        pixels[i+2] = b;
+        pixels[i + 1] = g;
+        pixels[i + 2] = b;
       }
 
       auxCtx.putImageData(imgData, 0, 0);
@@ -166,6 +170,7 @@ export function useImageSystem() {
       digitalCanvas.width = viewWidth;
       digitalCanvas.height = viewHeight;
 
+      // Desactivamos el suavizado de imagen del navegador para que el efecto de pixelado sea nitido
       ctxDigital.imageSmoothingEnabled = false;
       // @ts-expect-error browser compat
       ctxDigital.mozImageSmoothingEnabled = false;
@@ -176,6 +181,7 @@ export function useImageSystem() {
 
       ctxDigital.drawImage(auxCanvas, 0, 0, viewWidth, viewHeight);
 
+      // Calculo del ancho de banda y peso de los archivos
       const rawBytes = sampleW * sampleH * (bitsAmplitud / 8);
       const bps = rawBytes * 8 * state.fps;
       const mbps = bps / 1_000_000;
@@ -204,6 +210,7 @@ export function useImageSystem() {
     loadUTNPattern();
   }, [loadUTNPattern]);
 
+  // Funcion para descargar el resultado procesado en formato PNG
   const downloadDigitalImage = () => {
     if (!digitalCanvasRef.current) return;
     const tempLink = document.createElement('a');
@@ -212,13 +219,14 @@ export function useImageSystem() {
     tempLink.click();
   };
 
+  // Generacion del reporte en texto plano con los calculos solicitados por la catedra
   const exportReport = () => {
     if (!analogCanvasRef.current) return;
     const w = state.pixelResolution.w;
     const h = state.pixelResolution.h;
-    
+
     const reporteText = `===========================================================
-    REPORTE TÉCNICO DE LABORATORIO: CONVERSIÓN ANALÓGICO-DIGITAL (ÓPTICA)
+    REPORTE TÉCNICO: CONVERSIÓN ANALÓGICO-DIGITAL (ÓPTICA)
     CÁTEDRA DE COMUNICACIÓN DE DATOS - UTN FRLP
 ===========================================================
 

@@ -25,7 +25,7 @@ export function ControlsPanel({
   return (
     <aside className="p-6 bg-[#141517] border-b lg:border-b-0 lg:border-r-2 border-[#2c2e31] flex flex-col gap-6 overflow-y-auto">
       
-      {/* 1. Entrada Óptica */}
+      {/* Seccion de seleccion del archivo o patron de prueba (Entrada de señal optica) */}
       <div className="flex flex-col gap-3">
         <h2 className="font-mono text-[11px] uppercase tracking-[0.1em] text-[#747a82] border-b border-[#2c2e31] pb-2 mb-1">
           1. Entrada Óptica
@@ -53,7 +53,7 @@ export function ControlsPanel({
         </button>
       </div>
 
-      {/* 2. Muestreo Espacial */}
+      {/* Control del factor de submuestreo espacial (Resolucion de la grilla) */}
       <div className="flex flex-col gap-3">
         <h2 className="font-mono text-[11px] uppercase tracking-[0.1em] text-[#747a82] border-b border-[#2c2e31] pb-2 mb-1">
           2. Muestreo Espacial
@@ -76,7 +76,7 @@ export function ControlsPanel({
         </select>
       </div>
 
-      {/* 3. Cuantización Cromática */}
+      {/* Ajuste de la profundidad de bits para la limitacion del espacio de color */}
       <div className="flex flex-col gap-3">
         <h2 className="font-mono text-[11px] uppercase tracking-[0.1em] text-[#747a82] border-b border-[#2c2e31] pb-2 mb-1">
           3. Cuantización Cromática
@@ -98,7 +98,7 @@ export function ControlsPanel({
         </select>
       </div>
 
-      {/* 4. Parámetros de Canal */}
+      {/* Parametros derivados y calculos de ancho de banda para transmision */}
       <div className="flex flex-col gap-3">
         <h2 className="font-mono text-[11px] uppercase tracking-[0.1em] text-[#747a82] border-b border-[#2c2e31] pb-2 mb-1">
           4. Parámetros de Canal
@@ -138,7 +138,7 @@ export function ControlsPanel({
         </div>
       </div>
 
-      {/* Acciones de Exportación */}
+      {/* Botones de interaccion final para descarga del resultado y generacion del informe academico */}
       <div className="flex flex-col gap-3 mt-auto pt-6">
         <button 
           onClick={onDownload}

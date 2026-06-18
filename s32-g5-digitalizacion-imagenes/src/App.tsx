@@ -17,9 +17,11 @@ export default function App() {
         onToggleView={() => setCurrentView(currentView === 'simulator' ? 'theory' : 'simulator')}
       />
 
+      {/* Renderizado condicional del simulador interactivo o la pagina de teoria */}
       {currentView === 'simulator' ? (
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-[340px_1fr] overflow-hidden">
           
+          {/* Panel lateral con los controles de parametros para el experimento */}
           <ControlsPanel 
             state={state}
             onFactorChange={(f) => setState(s => ({ ...s, samplingFactor: f }))}
