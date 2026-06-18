@@ -1,0 +1,48 @@
+# ==============================================================================
+# UNIFIED .GITIGNORE - TP INTEGRADOR (REACT + VITE + FASTAPI)
+# ==============================================================================
+
+# 1. Dependencias y Logs (Node.js)
+node_modules/
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# 2. Builds (Vite/React)
+dist/
+dist-ssr/
+
+# 3. Entornos Virtuales y Cache (Python FastAPI)
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 4. Variables de Entorno y Secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# 5. Material de Referencia Local (Ignorado intencionalmente)
+docs/
+**/docs/
+
+# 6. Archivos del Sistema Operativo
+.DS_Store
+Thumbs.db
+
+# 7. Configuración de Editores (IDE)
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
