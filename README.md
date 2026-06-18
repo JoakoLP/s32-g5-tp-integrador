@@ -37,4 +37,4 @@ Herramienta enfocada en la compresión espacial de matrices de píxeles y reducc
 - **Conceptos Abordados:** Muestreo de Imagen, Cuantización Cromática (True Color, Indexado, Monocromo), Tasa de Refresco (FPS).
 
 ---
-**Documentación Adicional:** Puedes encontrar la documentación específica y las instrucciones de instalación dentro de la carpeta `README.md` de cada simulador.
+**Documentación Adicional:** Podés encontrar la documentación específica y las instrucciones de instalación dentro de la carpeta `README.md` de cada simulador.

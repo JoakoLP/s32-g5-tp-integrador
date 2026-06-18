@@ -119,7 +119,7 @@ export default function App() {
               <div className="bg-[rgba(255,167,38,0.05)] border border-[#ffa726]/20 p-3 rounded mt-2">
                 <strong className="text-[#ffa726] font-mono text-[10px] uppercase">Diagnóstico en Tiempo Real:</strong><br/>
                 <span className="text-xs text-slate-300">
-                  Con una frecuencia base actual de <strong className="text-[#00e676]">{state.waveFreq} Hz</strong>, se requiere un muestreo mínimo estricto de <strong className="text-[#ffa726]">{(state.waveFreq * 2 / 1000).toFixed(2)} kHz</strong>. Tienes configurada una F_s de {state.samplingRate.toFixed(1)} kHz, resultando en una Tasa de Datos de canal de {state.bitrate.toFixed(1)} kbps.
+                  Con una frecuencia base actual de <strong className="text-[#00e676]">{state.waveFreq} Hz</strong>, se requiere un muestreo mínimo estricto de <strong className="text-[#ffa726]">{(state.waveFreq * 2 / 1000).toFixed(2)} kHz</strong>. Tenés configurada una F_s de {state.samplingRate.toFixed(1)} kHz, resultando en una Tasa de Datos de canal de {state.bitrate.toFixed(1)} kbps.
                 </span>
               </div>
             </div>

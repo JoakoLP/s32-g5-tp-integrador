@@ -22,9 +22,9 @@ api/
 
 ## 📦 Instalación
 
-Asegúrate de tener Python 3.9 o superior instalado.
+Asegurate de tener Python 3.9 o superior instalado.
 
-1. Crea un entorno virtual (recomendado):
+1. Creá un entorno virtual (recomendado):
 ```bash
 python -m venv venv
 # Activar en Windows:
@@ -33,7 +33,7 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-2. Instala las dependencias:
+2. Instalá las dependencias:
 ```bash
 pip install fastapi uvicorn pydantic
 ```

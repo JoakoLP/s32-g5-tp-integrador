@@ -14,7 +14,7 @@ Necesitas tener instalado en tu computadora:
 
 ## ¿Cómo ejecutar la aplicación localmente?
 
-Abre una terminal, navega hacia la carpeta de esta aplicación (`s32-g5-digitalizacion-imagenes`) y sigue estos pasos:
+Abrí una terminal, navegá hacia la carpeta de esta aplicación (`s32-g5-digitalizacion-imagenes`) y seguí estos pasos:
 
 1. **Instalar las dependencias:**
    ```bash
@@ -27,7 +27,7 @@ Abre una terminal, navega hacia la carpeta de esta aplicación (`s32-g5-digitali
    ```
 
 3. **Abrir en el navegador:**
-   La terminal te indicará una URL local (generalmente `http://localhost:5173` o `http://localhost:5174`). Haz clic en ella o cópiala y pégala en tu navegador.
+   La terminal te indicará una URL local (generalmente `http://localhost:5173` o `http://localhost:5174`). Hacé clic en ella o copiala y pegala en tu navegador.
 
 ## Estructura del Proyecto
 

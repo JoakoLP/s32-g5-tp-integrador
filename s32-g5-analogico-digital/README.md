@@ -46,23 +46,23 @@ s32-g5-analogico-digital/
 Este proyecto consta de dos partes: el cliente frontend en React y el servidor backend en Python.
 
 ### 1. Levantar el Backend (FastAPI)
-Abre una terminal y dirígete a la carpeta `/api`:
+Abrí una terminal y dirigite a la carpeta `/api`:
 ```bash
 cd api
 pip install fastapi uvicorn
-# Ejecuta el servidor en el puerto 8000
+# Ejecutá el servidor en el puerto 8000
 python -m uvicorn index:app --reload --port 8000
 ```
 
 ### 2. Levantar el Frontend (React + Vite)
-Abre una nueva terminal en la raíz de este proyecto (`s32-g5-analogico-digital`):
+Abrí una nueva terminal en la raíz de este proyecto (`s32-g5-analogico-digital`):
 ```bash
 npm install
 # Levanta el servidor de desarrollo en http://localhost:5173/ (o 5174 si el puerto está en uso)
 npm run dev
 ```
 
-Una vez que ambos servidores estén corriendo, abre tu navegador en la URL que Vite te indique (por defecto `http://localhost:5173/`).
+Una vez que ambos servidores estén corriendo, abrí tu navegador en la URL que Vite te indique (por defecto `http://localhost:5173/`).
 
 ## 📚 Módulos Teóricos que abarca
 Este simulador pone en práctica de forma visual los conceptos de:

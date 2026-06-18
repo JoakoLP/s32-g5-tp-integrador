@@ -82,14 +82,14 @@ export function TheoryPage() {
           </h2>
           <div className="space-y-4 text-[15px] leading-relaxed">
             <p>
-              En el panel de control de la izquierda de la aplicación puedes alterar las siguientes variables del proceso de digitalización y observar sus efectos en tiempo real:
+              En el panel de control de la izquierda de la aplicación podés alterar las siguientes variables del proceso de digitalización y observar sus efectos en tiempo real:
             </p>
             <ul className="list-disc list-inside space-y-3">
               <li>
-                <strong>Ancho Muestreado (Píxeles):</strong> Modifica la frecuencia de muestreo espacial horizontal (frecuencia espacial). Al bajar este valor, notarás que la imagen se "pixela" progresivamente. Si bajas demasiado esta resolución de captura de muestra espacial por debajo de un mínimo de detalle de la imagen original, se produce <em>Aliasing</em>.
+                <strong>Ancho Muestreado (Píxeles):</strong> Modificá la frecuencia de muestreo espacial horizontal (frecuencia espacial). Al bajar este valor, vas a notar que la imagen se "pixela" progresivamente. Si bajás demasiado esta resolución de captura de muestra espacial por debajo de un mínimo de detalle de la imagen original, se produce <em>Aliasing</em>.
               </li>
               <li>
-                <strong>Profundidad de Color (Bits/Píxel):</strong> Modifica la cantidad de niveles (L) del cuantizador cromático. Valores de 24 y 16 bits mantienen colores nítidos (mayor volumen). Al bajar a 8 bits se produce cuantización observable (bandas de color). Bajar a 4 bits o menos destruye la imagen en "manchas" debido al altísimo ruido de cuantización, hasta llegar a 1 bit donde la imagen es estrictamente monocromática.
+                <strong>Profundidad de Color (Bits/Píxel):</strong> Modificá la cantidad de niveles (L) del cuantizador cromático. Valores de 24 y 16 bits mantienen colores nítidos (mayor volumen). Al bajar a 8 bits se produce cuantización observable (bandas de color). Bajar a 4 bits o menos destruye la imagen en "manchas" debido al altísimo ruido de cuantización, hasta llegar a 1 bit donde la imagen es estrictamente monocromática.
               </li>
               <li>
                 <strong>Tasa de Refresco (FPS):</strong> Simula el envío continuo de las imágenes (stream de video). No afecta visualmente a esta imagen estática, pero dispara la métrica de <span className="font-mono text-xs text-[#ffaa00]">TASA DE TRANSMISIÓN DE RED (R)</span> indicando que a mayor cantidad de FPS, se demandará un canal de comunicaciones con un ancho de banda considerablemente mayor para no experimentar cuellos de botella.
