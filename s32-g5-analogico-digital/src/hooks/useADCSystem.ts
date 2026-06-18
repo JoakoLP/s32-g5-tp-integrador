@@ -214,7 +214,6 @@ export function useADCSystem() {
       }
 
       const result: ProcessResult = await response.json();
-      digitalSignal.current = new Float32Array(result.processed_signal);
       setBitrate(result.bitrate);
       setLevels(result.levels);
       setSqnrTheoretical(result.sqnr_theoretical);
@@ -244,6 +243,21 @@ export function useADCSystem() {
     const renderLoop = () => {
       if (activeInput === 'synth') {
         generateSynthSamples();
+      }
+      
+      // OPTIMIZACIÓN: Calculamos la señal digital localmente a 60 FPS para que el Osciloscopio 
+      // se vea ultra fluido. La API en Python se sigue consultando cada 150ms pero solo
+      // para actualizar las métricas matemáticas (SQNR, Bitrate) sin causar lag visual.
+      const raw = originalSignal.current;
+      const length = raw.length;
+      const stepLevels = Math.pow(2, bitDepthRef.current);
+      const stepSize = 2.0 / stepLevels;
+      const ratio = Math.max(1, Math.floor(44100 / (samplingRateRef.current * 1000)));
+      
+      for (let i = 0; i < length; i++) {
+        const sampledIdx = Math.floor(i / ratio) * ratio;
+        const rawVal = raw[sampledIdx] || 0;
+        digitalSignal.current[i] = Math.round(rawVal / stepSize) * stepSize;
       }
       
       const now = Date.now();
