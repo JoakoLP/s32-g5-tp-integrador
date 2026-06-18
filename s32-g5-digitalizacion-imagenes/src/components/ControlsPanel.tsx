@@ -39,7 +39,11 @@ export function ControlsPanel({
             accept="image/*" 
             className="hidden" 
             onChange={(e) => {
-              if (e.target.files?.[0]) onUpload(e.target.files[0]);
+              if (e.target.files?.[0]) {
+                onUpload(e.target.files[0]);
+              }
+              // Reseteamos el valor para que permita volver a cargar la misma imagen
+              e.target.value = '';
             }}
           />
         </label>

@@ -57,7 +57,11 @@ export function InputControls({
             type="file"
             accept="audio/*"
             className="hidden"
-            onChange={handleFileUpload}
+            onChange={(e) => {
+              handleFileUpload(e);
+              // Reseteamos el valor para permitir subir el mismo archivo nuevamente
+              e.target.value = '';
+            }}
           />
           <div className={`font-semibold text-xs py-2.5 px-4 rounded border text-left flex items-center gap-2 transition-all ${
             activeInput === 'file'
